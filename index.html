@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Laiqa Mazhar — Full-Stack Engineer, Laravel &amp; Vue.js</title>
+<meta name="description" content="Full-Stack Engineer specializing in Laravel, Vue.js 3, MySQL and real-time SaaS platforms." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+  /* ============================================================
+     DESIGN TOKENS
+     ============================================================ */
+  :root{
+    --bg-base:#f4f7fc;
+    --bg-alt:#e9eefb;
+    --bg-deep:#dde5f7;
+    --ink:#0d1230;
+    --ink-soft:#4d5578;
+    --ink-faint:#828cb0;
+
+    --indigo:#4f46e5;
+    --indigo-soft:#7c6ff0;
+    --cyan:#0891a8;
+    --cyan-bright:#12c2dd;
+    --amber:#e08e2b;
+    --whatsapp:#25b358;
+
+    --glass:rgba(255,255,255,0.58);
+    --glass-strong:rgba(255,255,255,0.78);
+    --glass-border:rgba(255,255,255,0.9);
+    --glass-shadow:0 20px 60px rgba(28,32,80,0.10);
+
+    --radius-lg:26px;
+    --radius-md:18px;
+    --radius-sm:10px;
+
+    --font-display:'Roboto', sans-serif;
+    --font-body:'Roboto', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+
+    --ease:cubic-bezier(.22,1,.36,1);
+    --sec-pad:min(7vw,78px);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 12% -10%, rgba(124,111,240,0.16), transparent 60%),
+      radial-gradient(1000px 700px at 100% 10%, rgba(18,194,221,0.14), transparent 55%),
+      linear-gradient(180deg, var(--bg-base), var(--bg-alt) 40%, var(--bg-base) 100%);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.5;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  section{position:relative; padding:var(--sec-pad) 6vw; max-width:1320px; margin:0 auto;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--indigo);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+    font-weight:500;
+  }
+  .eyebrow::before{
+    content:'';
+    width:22px; height:1.5px;
+    background:linear-gradient(90deg,var(--indigo),var(--cyan-bright));
+  }
+  h1,h2,h3,h4{font-family:var(--font-display); font-weight:700; letter-spacing:-.02em; color:var(--ink);}
+  h2.section-title{font-size:clamp(28px,3.6vw,42px); line-height:1.1; margin-bottom:12px;}
+  .section-sub{color:var(--ink-soft); font-size:16.5px; max-width:560px; margin-bottom:44px; font-weight:400;}
+  ::selection{background:var(--indigo); color:#fff;}
+
+  /* reveal-on-scroll */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .9s var(--ease), transform .9s var(--ease);}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  .reveal-stagger > *{opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal-stagger.in-view > *{opacity:1; transform:translateY(0);}
+  .reveal-stagger.in-view > *:nth-child(1){transition-delay:.05s;}
+  .reveal-stagger.in-view > *:nth-child(2){transition-delay:.14s;}
+  .reveal-stagger.in-view > *:nth-child(3){transition-delay:.23s;}
+  .reveal-stagger.in-view > *:nth-child(4){transition-delay:.32s;}
+  .reveal-stagger.in-view > *:nth-child(5){transition-delay:.41s;}
+  .reveal-stagger.in-view > *:nth-child(6){transition-delay:.50s;}
+
+  /* ============================================================
+     GLASS PRIMITIVES
+     ============================================================ */
+  .glass{
+    background:var(--glass);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    border:1px solid var(--glass-border);
+    box-shadow:var(--glass-shadow);
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:14px 26px;
+    border-radius:100px;
+    font-family:var(--font-body); font-weight:700; font-size:14.5px;
+    cursor:pointer; border:none;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease);
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--indigo),var(--indigo-soft));
+    color:#fff;
+    box-shadow:0 14px 32px rgba(79,70,229,0.32);
+  }
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 20px 40px rgba(79,70,229,0.4);}
+  .btn-ghost{
+    background:var(--glass-strong);
+    border:1px solid rgba(13,18,48,0.1);
+    color:var(--ink);
+  }
+  .btn-ghost:hover{transform:translateY(-3px); border-color:var(--indigo-soft);}
+  .btn-whatsapp{
+    background:linear-gradient(135deg,var(--whatsapp),#1a8f45);
+    color:#fff;
+    box-shadow:0 14px 32px rgba(37,179,88,0.32);
+  }
+  .btn-whatsapp:hover{transform:translateY(-3px); box-shadow:0 20px 40px rgba(37,179,88,0.4);}
+  .btn-ghost svg, .btn-primary svg, .btn-whatsapp svg{width:15px; height:15px;}
+
+  /* ============================================================
+     NAVBAR
+     ============================================================ */
+  #navbar{
+    position:fixed; top:16px; left:50%; transform:translateX(-50%);
+    width:min(94vw,1180px);
+    z-index:200;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 14px 12px 22px;
+    border-radius:100px;
+    transition:box-shadow .4s var(--ease), background .4s var(--ease);
+  }
+  .nav-logo{
+    font-family:var(--font-display); font-weight:900; font-size:16px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .nav-logo .dot{
+    width:9px; height:9px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #b7f4ff, var(--cyan-bright) 60%, var(--indigo));
+    box-shadow:0 0 12px rgba(18,194,221,.9);
+  }
+  .nav-links{display:flex; align-items:center; gap:6px;}
+  .nav-links a{
+    font-size:13.5px; font-weight:500; color:var(--ink-soft);
+    padding:9px 15px; border-radius:100px;
+    transition:color .3s, background .3s;
+    position:relative;
+  }
+  .nav-links a:hover, .nav-links a.active{color:var(--ink); background:rgba(79,70,229,0.08);}
+  .nav-cta{display:flex; align-items:center; gap:10px;}
+  .nav-cta .btn{padding:10px 20px; font-size:13px;}
+  .nav-wa{
+    width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg,var(--whatsapp),#1a8f45); color:#fff; flex:none;
+  }
+  .nav-wa svg{width:18px; height:18px;}
+  #nav-toggle{display:none; width:38px; height:38px; border-radius:50%; border:1px solid rgba(13,18,48,0.12); background:var(--glass-strong); cursor:pointer; align-items:center; justify-content:center;}
+  #nav-toggle span, #nav-toggle::before, #nav-toggle::after{content:''; display:block; width:16px; height:1.6px; background:var(--ink); position:relative;}
+  #nav-toggle{flex-direction:column; gap:4px;}
+
+  /* ============================================================
+     HERO — center model, text flanking on both sides
+     ============================================================ */
+  #hero{
+    min-height:92vh;
+    padding-top:64px;
+    display:flex; align-items:center;
+    position:relative;
+  }
+  .hero-grid{
+    position:relative; z-index:2;
+    display:grid; grid-template-columns:1fr auto 1fr; gap:22px; align-items:center; width:100%;
+  }
+  .hero-side h1{
+    font-size:clamp(30px,3.4vw,46px);
+    line-height:1.08;
+    margin-bottom:18px;
+  }
+  .hero-side h1 .grad{
+    background:linear-gradient(100deg,var(--indigo) 10%,var(--cyan-bright) 60%,var(--amber) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-left p.lead{font-size:16px; color:var(--ink-soft); max-width:340px; margin-bottom:28px;}
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-right{display:flex; flex-direction:column; align-items:flex-end;}
+
+  /* "Why Automate" persuasion card */
+  .automate-card{
+    border-radius:24px;
+    padding:26px 26px 22px;
+    text-align:left;
+    max-width:340px;
+    position:relative;
+    overflow:hidden;
+  }
+  .automate-card::before{
+    content:'';
+    position:absolute; top:-30%; right:-30%; width:70%; height:70%;
+    background:radial-gradient(circle, rgba(224,142,43,.16), transparent 70%);
+    filter:blur(20px); z-index:-1;
+  }
+  .ac-eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--amber); font-weight:500; margin-bottom:12px;
+  }
+  .ac-eyebrow::before{content:'';width:16px;height:1.5px;background:var(--amber);}
+  .ac-line{font-size:14.5px; line-height:1.55; color:var(--ink-soft); margin-bottom:20px;}
+  .ac-line b{color:var(--ink); font-weight:700;}
+  .ac-stats{display:flex; flex-direction:column; gap:14px;}
+  .ac-stat{display:flex; align-items:center; gap:12px;}
+  .ac-stat .ac-icon{
+    width:36px; height:36px; border-radius:10px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(79,70,229,.14), rgba(18,194,221,.14)); color:var(--indigo);
+  }
+  .ac-stat .ac-icon svg{width:17px; height:17px;}
+  .ac-stat b{display:block; font-family:var(--font-display); font-size:17px; font-weight:900; line-height:1.15;}
+  .ac-stat span{font-size:11.5px; color:var(--ink-faint); line-height:1.3; display:block;}
+
+  /* center orb */
+  .hero-center{position:relative; width:min(46vw,400px); height:min(46vw,400px); display:flex; align-items:center; justify-content:center;}
+  .hero-orb-frame{
+    position:relative; width:78%; height:78%; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.65), rgba(255,255,255,.15) 60%);
+    border:1px solid rgba(255,255,255,.9);
+    box-shadow:0 30px 80px rgba(79,70,229,0.22), inset 0 0 60px rgba(255,255,255,.5);
+    overflow:hidden;
+  }
+  .hero-orb-frame canvas{width:100% !important; height:100% !important;}
+  .hero-orbit-ring{position:absolute; inset:0; animation:orbitspin 34s linear infinite;}
+  .orbit-badge{
+    position:absolute; top:50%; left:50%; width:0; height:0;
+  }
+  .orbit-badge .badge-inner{
+    position:absolute; transform:translate(-50%,-50%);
+    animation:orbitcounter 34s linear infinite;
+    display:flex; align-items:center; gap:6px;
+    padding:7px 12px; border-radius:100px;
+    font-family:var(--font-mono); font-size:10.5px; font-weight:500;
+    white-space:nowrap;
+  }
+  .orbit-badge .dotc{width:6px; height:6px; border-radius:50%;}
+  @keyframes orbitspin{to{transform:rotate(360deg);}}
+  @keyframes orbitcounter{to{transform:translate(-50%,-50%) rotate(-360deg);}}
+
+  .scroll-cue{
+    position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:10.5px; color:var(--ink-faint); letter-spacing:.12em;
+    z-index:2;
+  }
+  .scroll-cue .line{width:1px; height:30px; background:linear-gradient(var(--indigo),transparent); animation:scrollLine 1.8s infinite;}
+  @keyframes scrollLine{0%{opacity:0; transform:scaleY(.3); transform-origin:top;} 50%{opacity:1; transform:scaleY(1);} 100%{opacity:0; transform:scaleY(.3); transform-origin:bottom;}}
+
+  /* ============================================================
+     ABOUT — redesigned
+     ============================================================ */
+  #about{padding-top:calc(var(--sec-pad) * 0.6);}
+  .about-wrap{display:grid; grid-template-columns:.8fr 1.2fr; gap:50px; align-items:center;}
+  .about-visual{position:relative;}
+  .about-visual-card{
+    border-radius:32px; padding:34px 30px; position:relative; overflow:hidden;
+  }
+  .about-visual-card::before{
+    content:''; position:absolute; inset:0;
+    background:conic-gradient(from 120deg at 30% 20%, rgba(79,70,229,.14), rgba(18,194,221,.12), rgba(224,142,43,.08), rgba(79,70,229,.14));
+    filter:blur(34px); opacity:.6; z-index:-1;
+  }
+  .about-ring-wrap{width:120px; height:120px; margin:0 auto 22px; position:relative; display:flex; align-items:center; justify-content:center;}
+  .about-ring-wrap .dash-ring{
+    position:absolute; inset:0; border-radius:50%;
+    border:2px dashed rgba(79,70,229,.35);
+    animation:spinSlow 26s linear infinite;
+  }
+  @keyframes spinSlow{to{transform:rotate(360deg);}}
+  .about-avatar{
+    width:84px; height:84px; border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, #eef1ff, var(--indigo-soft) 55%, var(--indigo));
+    box-shadow:0 18px 32px rgba(79,70,229,.3);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:900; color:#fff; font-size:26px;
+  }
+  .about-visual-card h3{font-size:20px; text-align:center; margin-bottom:2px;}
+  .about-visual-card .role{color:var(--cyan); font-family:var(--font-mono); font-size:12px; text-align:center; margin-bottom:22px;}
+  .about-ribbon{
+    display:inline-flex; align-items:center; gap:8px; margin:0 auto 22px; padding:7px 14px;
+    border-radius:100px; background:rgba(79,70,229,.09); color:var(--indigo);
+    font-size:11.5px; font-family:var(--font-mono); font-weight:500;
+    justify-content:center; width:fit-content;
+  }
+  .about-ribbon .pulse{width:7px; height:7px; border-radius:50%; background:var(--indigo); box-shadow:0 0 0 0 rgba(79,70,229,.6); animation:pulseDot 1.8s infinite;}
+  @keyframes pulseDot{0%{box-shadow:0 0 0 0 rgba(79,70,229,.55);} 70%{box-shadow:0 0 0 8px rgba(79,70,229,0);} 100%{box-shadow:0 0 0 0 rgba(79,70,229,0);}}
+  .about-meta{display:flex; flex-direction:column; gap:12px; font-size:13px; color:var(--ink-soft);}
+  .about-meta li{display:flex; gap:10px; align-items:flex-start;}
+  .about-meta svg{width:15px; height:15px; margin-top:2px; flex:none; color:var(--indigo);}
+
+  .about-content .quote{
+    font-family:var(--font-display); font-weight:500; font-size:clamp(20px,2.1vw,26px);
+    line-height:1.4; color:var(--ink);
+    border-left:3px solid var(--indigo); padding-left:22px; margin:22px 0 26px;
+  }
+  .about-content p{color:var(--ink-soft); font-size:15.5px; margin-bottom:16px; max-width:640px;}
+  .about-content p b{color:var(--ink); font-weight:700;}
+  .about-stat-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:30px;}
+  .about-stat-card{
+    border-radius:18px; padding:20px 20px; display:flex; align-items:center; gap:14px;
+    transition:transform .35s var(--ease);
+  }
+  .about-stat-card:hover{transform:translateY(-4px);}
+  .about-stat-card .asc-icon{
+    width:42px; height:42px; border-radius:12px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(79,70,229,.15), rgba(18,194,221,.15)); color:var(--indigo);
+  }
+  .about-stat-card .asc-icon svg{width:20px; height:20px;}
+  .about-stat-card b{display:block; font-family:var(--font-display); font-size:20px; font-weight:900;}
+  .about-stat-card span{font-size:11.5px; color:var(--ink-faint); font-family:var(--font-mono);}
+
+  /* ============================================================
+     SKILLS
+     ============================================================ */
+  .skills-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .skill-card{
+    border-radius:var(--radius-md);
+    padding:22px 20px;
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .skill-card:hover{transform:translateY(-6px);}
+  .skill-card .sk-icon{
+    width:40px; height:40px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:14px;
+    background:linear-gradient(135deg, rgba(79,70,229,.14), rgba(18,194,221,.14));
+    color:var(--indigo);
+  }
+  .skill-card .sk-icon svg{width:20px; height:20px;}
+  .skill-card h4{font-size:15px; margin-bottom:12px;}
+  .tag-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{
+    font-family:var(--font-mono); font-size:11px;
+    padding:6px 11px; border-radius:100px;
+    background:rgba(13,18,48,.045);
+    border:1px solid rgba(13,18,48,.07);
+    color:var(--ink-soft);
+  }
+
+  /* ============================================================
+     PAST WORK — overlapped stack that swipes up on scroll
+     ============================================================ */
+  #projects{padding-bottom:calc(var(--sec-pad) * 0.4);}
+  .stack-container{position:relative; margin-top:10px;}
+  .stack-item{position:sticky; top:96px; padding-bottom:26px;}
+  .stack-card{
+    border-radius:30px;
+    padding:clamp(28px,4vw,52px);
+    display:grid; grid-template-columns:auto 1fr auto; gap:30px; align-items:center;
+    min-height:260px;
+    transition:transform .25s var(--ease), filter .25s var(--ease);
+    will-change:transform;
+  }
+  .stack-num{
+    font-family:var(--font-display); font-weight:900; font-size:15px;
+    color:var(--ink-faint); writing-mode:vertical-rl; text-orientation:mixed;
+  }
+  .stack-glyph{
+    width:64px; height:64px; border-radius:18px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-family:var(--font-display); font-weight:900; font-size:18px;
+    box-shadow:0 16px 30px rgba(18,194,221,.28);
+  }
+  .stack-body h3{font-size:clamp(20px,2.3vw,28px); margin-bottom:10px;}
+  .stack-body p{font-size:14.5px; color:var(--ink-soft); max-width:640px; margin-bottom:16px;}
+  .stack-right{display:flex; flex-direction:column; align-items:flex-end; gap:14px;}
+  .stack-badge{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em;
+    padding:5px 11px; border-radius:100px; white-space:nowrap;
+  }
+  .stack-link{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; color:var(--indigo);}
+  .stack-link svg{width:13px; height:13px;}
+  .more-systems{margin-top:14px; text-align:center; font-family:var(--font-mono); font-size:12px; color:var(--ink-faint);}
+  .more-systems span{color:var(--ink-soft);}
+
+  /* ============================================================
+     EXPERIENCE
+     ============================================================ */
+  .timeline{position:relative; padding-left:34px;}
+  .timeline::before{
+    content:''; position:absolute; left:8px; top:6px; bottom:6px; width:2px;
+    background:linear-gradient(var(--indigo),var(--cyan-bright));
+    opacity:.35;
+  }
+  .tl-entry{position:relative; padding-bottom:44px;}
+  .tl-entry:last-child{padding-bottom:0;}
+  .tl-dot{
+    position:absolute; left:-34px; top:4px; width:18px; height:18px; border-radius:50%;
+    background:var(--bg-base);
+    border:2px solid var(--indigo);
+    box-shadow:0 0 0 6px rgba(79,70,229,.1);
+  }
+  .tl-entry.current .tl-dot{background:var(--indigo); box-shadow:0 0 0 6px rgba(79,70,229,.18), 0 0 18px rgba(79,70,229,.5);}
+  .tl-card{border-radius:var(--radius-md); padding:24px 26px;}
+  .tl-head{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:6px;}
+  .tl-head h3{font-size:18px;}
+  .tl-head .tl-date{font-family:var(--font-mono); font-size:11.5px; color:var(--cyan);}
+  .tl-company{color:var(--ink-soft); font-size:13px; margin-bottom:14px;}
+  .tl-list{display:flex; flex-direction:column; gap:9px;}
+  .tl-list li{display:flex; gap:10px; font-size:13.5px; color:var(--ink-soft);}
+  .tl-list li::before{content:'▹'; color:var(--indigo); flex:none;}
+
+  /* ============================================================
+     SERVICES — continuous orbit around a central circle
+     ============================================================ */
+  #services{padding-top:calc(var(--sec-pad) * 0.7);}
+  .services-wrap{display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center;}
+  .orbit-stage{
+    position:relative; width:min(46vw,480px); height:min(46vw,480px); margin:0 auto;
+  }
+  .orbit-hub{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:130px; height:130px; border-radius:50%;
+    background:linear-gradient(135deg,var(--indigo),var(--cyan-bright));
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:2px;
+    box-shadow:0 0 0 10px rgba(79,70,229,.08), 0 0 60px rgba(18,194,221,.35);
+    color:#fff; text-align:center; z-index:3;
+  }
+  .orbit-hub b{font-family:var(--font-display); font-weight:900; font-size:16px;}
+  .orbit-hub span{font-family:var(--font-mono); font-size:9.5px; opacity:.85;}
+  .orbit-track{position:absolute; inset:0; border-radius:50%; border:1px dashed rgba(79,70,229,.22);}
+  .orbit-track.t2{inset:38px; border-color:rgba(18,194,221,.2);}
+  .service-ring{position:absolute; inset:0; animation:orbitspin 40s linear infinite;}
+  .service-ring.reverse{animation-direction:reverse; animation-duration:52s;}
+  .service-orbit-item{position:absolute; top:50%; left:50%; width:0; height:0;}
+  .service-orbit-item .soi-inner{
+    position:absolute; transform:translate(-50%,-50%);
+    animation:orbitcounter 40s linear infinite;
+    width:74px; height:74px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .service-ring.reverse .soi-inner{animation-direction:reverse; animation-duration:52s;}
+  .soi-inner:hover, .soi-inner.active{transform:translate(-50%,-50%) scale(1.14);}
+  .soi-inner svg{width:22px; height:22px; color:var(--indigo);}
+  .orbit-stage:hover .service-ring{animation-play-state:paused;}
+  .orbit-stage:hover .soi-inner{animation-play-state:paused;}
+
+  .service-detail{padding:8px 0;}
+  .service-detail .sd-idx{font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); margin-bottom:10px;}
+  .service-detail h3{font-size:24px; margin-bottom:12px; min-height:32px;}
+  .service-detail p{color:var(--ink-soft); font-size:15px; margin-bottom:26px; min-height:70px;}
+  .service-pips{display:flex; flex-wrap:wrap; gap:8px;}
+  .service-pip{
+    font-family:var(--font-mono); font-size:11px; padding:8px 13px; border-radius:100px;
+    border:1px solid rgba(13,18,48,.09); color:var(--ink-soft); cursor:pointer;
+    transition:all .3s;
+  }
+  .service-pip.active, .service-pip:hover{background:var(--indigo); color:#fff; border-color:var(--indigo);}
+
+  .services-fallback{display:none;}
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  #contact .contact-wrap{
+    border-radius:32px;
+    padding:min(6vw,58px);
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+  }
+  #contact .contact-wrap::before{
+    content:'';
+    position:absolute; inset:-40%;
+    background:conic-gradient(from 90deg, rgba(79,70,229,.12), rgba(18,194,221,.1), rgba(224,142,43,.08), rgba(79,70,229,.12));
+    filter:blur(60px);
+    z-index:-1;
+    animation:spin 18s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #contact h2{font-size:clamp(28px,4vw,44px); max-width:640px; margin:0 auto 16px;}
+  #contact p.lead{color:var(--ink-soft); max-width:480px; margin:0 auto 32px; font-size:15.5px;}
+  .contact-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:34px;}
+  .contact-info{display:flex; gap:26px; justify-content:center; flex-wrap:wrap; font-size:13px; color:var(--ink-soft); font-family:var(--font-mono);}
+  .contact-info a{color:var(--ink-soft); transition:color .3s;}
+  .contact-info a:hover{color:var(--indigo);}
+
+  footer{text-align:center; padding:34px 6vw 44px; color:var(--ink-faint); font-size:12px; font-family:var(--font-mono);}
+
+  /* floating WhatsApp FAB */
+  #wa-fab{
+    position:fixed; right:26px; bottom:26px; z-index:150;
+    width:58px; height:58px; border-radius:50%;
+    background:linear-gradient(135deg,var(--whatsapp),#1a8f45);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 16px 34px rgba(37,179,88,.4);
+    transition:transform .35s var(--ease);
+  }
+  #wa-fab:hover{transform:scale(1.08) translateY(-2px);}
+  #wa-fab svg{width:27px; height:27px; color:#fff;}
+  #wa-fab .wa-ping{
+    position:absolute; inset:0; border-radius:50%;
+    border:2px solid var(--whatsapp);
+    animation:waPing 2.4s ease-out infinite;
+  }
+  @keyframes waPing{0%{transform:scale(1); opacity:.6;} 100%{transform:scale(1.6); opacity:0;}}
+
+  /* cursor glow */
+  #cursor-glow{
+    position:fixed; width:420px; height:420px; border-radius:50%;
+    background:radial-gradient(circle, rgba(79,70,229,.10), rgba(18,194,221,.06) 45%, transparent 70%);
+    pointer-events:none; z-index:1; transform:translate(-50%,-50%);
+    transition:opacity .3s; will-change:transform;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr; text-align:center; justify-items:center;}
+    .hero-center{order:-1; width:280px; height:280px; margin-bottom:10px;}
+    .hero-left p.lead{margin-left:auto; margin-right:auto;}
+    .hero-actions{justify-content:center;}
+    .hero-right{align-items:center;}
+    .automate-card{text-align:left; max-width:360px;}
+    .about-wrap{grid-template-columns:1fr;}
+    .skills-grid{grid-template-columns:repeat(2,1fr);}
+    .services-wrap{grid-template-columns:1fr;}
+    .orbit-stage{width:320px; height:320px;}
+    .stack-card{grid-template-columns:1fr; text-align:left;}
+    .stack-num{display:none;}
+    .stack-right{align-items:flex-start;}
+    .nav-links{display:none;}
+    #nav-toggle{display:flex;}
+  }
+  @media (max-width:640px){
+    :root{--sec-pad:56px;}
+    section{padding:var(--sec-pad) 6vw;}
+    .skills-grid{grid-template-columns:1fr;}
+    .about-stat-grid{grid-template-columns:1fr;}
+    .nav-cta .btn-ghost{display:none;}
+    #cursor-glow{display:none;}
+    .orbit-stage{width:260px; height:260px;}
+    .orbit-hub{width:100px; height:100px;}
+    .service-orbit-item .soi-inner{width:58px; height:58px;}
+    .service-orbit-item .soi-inner svg{width:18px; height:18px;}
+    .stack-item{top:80px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--indigo); outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<div id="cursor-glow"></div>
+
+<!-- ============ NAVBAR ============ -->
+<nav id="navbar" class="glass">
+  <div class="nav-logo"><span class="dot"></span> Laiqa&nbsp;Mazhar</div>
+  <div class="nav-links" id="nav-links">
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Work</a>
+    <a href="#experience">Experience</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-cta">
+    <a href="https://wa.me/923448573663" target="_blank" rel="noopener" class="nav-wa" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.51 2 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.53 3.69-8.22 8.27-8.22 2.21 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.42 5.83c0 4.53-3.7 8.2-8.27 8.2zm4.53-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.4-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.99-1.22-.73-.66-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.24-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.02 2.61c.13.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+    </a>
+    <a href="#contact" class="btn btn-primary">Let's talk</a>
+  </div>
+  <button id="nav-toggle" aria-label="Toggle menu"><span></span></button>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="home" style="padding-bottom:0;">
+  <div id="hero">
+    <div class="hero-grid">
+
+      <div class="hero-side hero-left">
+        <div class="eyebrow">Full-Stack Engineer</div>
+        <h1>Backend logic, <span class="grad">frontend polish</span>.</h1>
+        <p class="lead">3+ years engineering ERP, SaaS and real-time platforms for teams across Canada and Pakistan — owned end to end.</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">
+            View my work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost">Start a project</a>
+        </div>
+      </div>
+
+      <div class="hero-center">
+        <div class="hero-orb-frame"><canvas id="hero-canvas"></canvas></div>
+        <div class="hero-orbit-ring">
+          <div class="orbit-badge" style="transform:rotate(0deg) translateX(210px);">
+            <div class="badge-inner glass"><span class="dotc" style="background:var(--indigo)"></span>Laravel</div>
+          </div>
+          <div class="orbit-badge" style="transform:rotate(90deg) translateX(210px);">
+            <div class="badge-inner glass"><span class="dotc" style="background:var(--cyan)"></span>Vue.js</div>
+          </div>
+          <div class="orbit-badge" style="transform:rotate(180deg) translateX(210px);">
+            <div class="badge-inner glass"><span class="dotc" style="background:var(--amber)"></span>MySQL</div>
+          </div>
+          <div class="orbit-badge" style="transform:rotate(270deg) translateX(210px);">
+            <div class="badge-inner glass"><span class="dotc" style="background:var(--indigo-soft)"></span>API</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-side hero-right">
+        <div class="automate-card glass">
+          <div class="ac-eyebrow">Why Automate</div>
+          <p class="ac-line">Every manual process is a business quietly <b>paying twice</b> — once in payroll, once in the errors that come with it. The businesses that automate first don't just move faster, they compound.</p>
+          <div class="ac-stats">
+            <div class="ac-stat">
+              <div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></div>
+              <div><b>10+ systems</b><span>replacing manual, spreadsheet-run operations</span></div>
+            </div>
+            <div class="ac-stat">
+              <div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></div>
+              <div><b>~40% less</b><span>manual data entry after API integration</span></div>
+            </div>
+            <div class="ac-stat">
+              <div class="ac-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+              <div><b>&lt;200ms</b><span>response time, even past 10,000+ records</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT (redesigned) ============ -->
+<section id="about">
+  <div class="about-wrap">
+    <div class="about-visual reveal">
+      <div class="about-visual-card glass">
+        <div class="about-ring-wrap">
+          <div class="dash-ring"></div>
+          <div class="about-avatar">LM</div>
+        </div>
+        <h3>Laiqa Mazhar</h3>
+        <div class="role">Software Development Executive</div>
+        <div style="display:flex; justify-content:center;">
+          <div class="about-ribbon"><span class="pulse"></span> Currently @ FVN Tech, Remote</div>
+        </div>
+        <ul class="about-meta">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Gujrat, Pakistan — open to remote &amp; onsite</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 4v16"/></svg> BS Information Technology, GCWUS · 2020–2024</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Real-time features via Laravel Events &amp; WebSockets</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="about-content reveal">
+      <div class="eyebrow">About</div>
+      <h2 class="section-title">I like software that has to actually work.</h2>
+      <p class="quote">"A dashboard is only as good as the schema underneath it."</p>
+      <p><b>Full-stack engineer with 3+ years</b> building and deploying scalable web applications for international clients across Canada and Pakistan — spanning ERP, eCommerce, LMS and SaaS platforms. My core stack is <b>Laravel, Vue.js 3 and MySQL</b>, and I own projects end to end: schema design, REST APIs, frontend, deployment.</p>
+      <p>Most of my work happens async, across a two-time-zone gap, delivering on tight deadlines without daily hand-holding.</p>
+      <div class="about-stat-grid reveal-stagger">
+        <div class="about-stat-card glass">
+          <div class="asc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></div>
+          <div><b>10+</b><span>APPS SHIPPED</span></div>
+        </div>
+        <div class="about-stat-card glass">
+          <div class="asc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <div><b>5+</b><span>API INTEGRATIONS</span></div>
+        </div>
+        <div class="about-stat-card glass">
+          <div class="asc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div><b>~30%</b><span>FASTER W/ AI-ASSISTED DEV</span></div>
+        </div>
+        <div class="about-stat-card glass">
+          <div class="asc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg></div>
+          <div><b>&lt;200ms</b><span>ERP QUERY PERFORMANCE</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <div class="eyebrow reveal">Skills</div>
+  <h2 class="section-title reveal">The stack, top to bottom.</h2>
+  <p class="section-sub reveal">Comfortable owning a feature from the MySQL schema to the last pixel of the Vue component that reads it.</p>
+
+  <div class="skills-grid reveal-stagger">
+    <div class="skill-card glass">
+      <div class="sk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+      <h4>Frontend</h4>
+      <div class="tag-row">
+        <span class="tag">Vue.js 3</span><span class="tag">JavaScript ES6+</span><span class="tag">Bootstrap 5</span><span class="tag">jQuery / AJAX</span><span class="tag">Responsive UI</span>
+      </div>
+    </div>
+    <div class="skill-card glass">
+      <div class="sk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></div>
+      <h4>Backend</h4>
+      <div class="tag-row">
+        <span class="tag">Laravel 6–11</span><span class="tag">PHP 8+</span><span class="tag">CodeIgniter</span><span class="tag">C#</span><span class="tag">Queues &amp; Jobs</span><span class="tag">WebSockets</span>
+      </div>
+    </div>
+    <div class="skill-card glass">
+      <div class="sk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg></div>
+      <h4>Databases</h4>
+      <div class="tag-row">
+        <span class="tag">MySQL</span><span class="tag">Indexing &amp; Optimization</span><span class="tag">Firebase Realtime DB</span><span class="tag">Firestore</span>
+      </div>
+    </div>
+    <div class="skill-card glass">
+      <div class="sk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg></div>
+      <h4>CMS / eCommerce</h4>
+      <div class="tag-row">
+        <span class="tag">Shopify</span><span class="tag">WordPress</span><span class="tag">Custom Themes</span><span class="tag">Plugin Dev</span>
+      </div>
+    </div>
+    <div class="skill-card glass">
+      <div class="sk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-6"/></svg></div>
+      <h4>DevOps &amp; Tools</h4>
+      <div class="tag-row">
+        <span class="tag">Git / GitHub / GitLab</span><span class="tag">CI/CD Fundamentals</span><span class="tag">Composer</span><span class="tag">Postman</span>
+      </div>
+    </div>
+    <div class="skill-card glass">
+      <div class="sk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      <h4>Ways of Working</h4>
+      <div class="tag-row">
+        <span class="tag">Agile / Scrum</span><span class="tag">Remote Collaboration</span><span class="tag">Code Review</span><span class="tag">AI-Assisted Dev</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAST WORK — swipe-up stack ============ -->
+<section id="projects">
+  <div class="eyebrow reveal">Past Work</div>
+  <h2 class="section-title reveal">Production systems, not demos.</h2>
+  <p class="section-sub reveal">Scroll — each build stacks over the last, the way real projects piled up over three years.</p>
+
+  <div class="stack-container">
+
+    <div class="stack-item" style="z-index:1;">
+      <div class="stack-card glass">
+        <span class="stack-num">01 · QEXCEL</span>
+        <div style="display:flex; gap:24px; align-items:center;">
+          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--indigo),var(--indigo-soft));">QX</div>
+          <div class="stack-body">
+            <h3>QExcel Pro</h3>
+            <p>Multi-module admin platform for business operations and food-safety compliance, built for a Canadian enterprise client. KPI dashboards process 10,000+ records with sub-300ms response times.</p>
+            <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Vue.js</span><span class="tag">MySQL</span><span class="tag">Bootstrap</span></div>
+          </div>
+        </div>
+        <div class="stack-right">
+          <span class="stack-badge" style="background:rgba(79,70,229,.12); color:var(--indigo);">LIVE · PRODUCTION</span>
+          <span class="stack-link">Compliance &amp; reporting <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack-item" style="z-index:2;">
+      <div class="stack-card glass">
+        <span class="stack-num">02 · VISPRO</span>
+        <div style="display:flex; gap:24px; align-items:center;">
+          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--cyan),var(--cyan-bright));">VP</div>
+          <div class="stack-body">
+            <h3>VisPro LMS</h3>
+            <p>Corporate learning management system with course creation, enrollment, assessments and progress tracking across differentiated dashboards for Admins, Instructors and Learners.</p>
+            <div class="tag-row"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">AJAX</span></div>
+          </div>
+        </div>
+        <div class="stack-right">
+          <span class="stack-badge" style="background:rgba(8,145,168,.12); color:var(--cyan);">LMS PLATFORM</span>
+          <span class="stack-link">Role-based dashboards <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack-item" style="z-index:3;">
+      <div class="stack-card glass">
+        <span class="stack-num">03 · VMS</span>
+        <div style="display:flex; gap:24px; align-items:center;">
+          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--amber),#f0b35f);">VM</div>
+          <div class="stack-body">
+            <h3>VMS — Visitor Management</h3>
+            <p>Real-time visitor management SPA that replaced paper front-desk logs with QR-code identity flows and instant host notifications via email/SMS.</p>
+            <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Vue.js</span></div>
+          </div>
+        </div>
+        <div class="stack-right">
+          <span class="stack-badge" style="background:rgba(224,142,43,.14); color:#a5691a;">REAL-TIME SPA</span>
+          <span class="stack-link">QR check-in flow <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack-item" style="z-index:4;">
+      <div class="stack-card glass">
+        <span class="stack-num">04 · FVOPEX</span>
+        <div style="display:flex; gap:24px; align-items:center;">
+          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--indigo-soft),var(--indigo));">FX</div>
+          <div class="stack-body">
+            <h3>FVOPEX</h3>
+            <p>Multi-tenant supplier network platform (Maintainex) — navigation, data tables, supplier profiles and live chat panels for operational teams.</p>
+            <div class="tag-row"><span class="tag">Vue.js 3</span><span class="tag">Laravel</span></div>
+          </div>
+        </div>
+        <div class="stack-right">
+          <span class="stack-badge" style="background:rgba(79,70,229,.12); color:var(--indigo);">MULTI-TENANT SAAS</span>
+          <span class="stack-link">Supplier network <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack-item" style="z-index:5;">
+      <div class="stack-card glass">
+        <span class="stack-num">05 · FVPRO</span>
+        <div style="display:flex; gap:24px; align-items:center;">
+          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--cyan-bright),var(--cyan));">FL</div>
+          <div class="stack-body">
+            <h3>FVPro Learn</h3>
+            <p>End-to-end online learning platform with course management, assessments and instructor dashboards, built on a reusable Blade component library across 15+ views.</p>
+            <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Bootstrap</span></div>
+          </div>
+        </div>
+        <div class="stack-right">
+          <span class="stack-badge" style="background:rgba(8,145,168,.12); color:var(--cyan);">6-WEEK SHIP</span>
+          <span class="stack-link">Reusable component library <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack-item" style="z-index:6;">
+      <div class="stack-card glass">
+        <span class="stack-num">06 · SE LINK</span>
+        <div style="display:flex; gap:24px; align-items:center;">
+          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--amber),var(--indigo-soft));">SE</div>
+          <div class="stack-body">
+            <h3>SE Link</h3>
+            <p>Operations workflow platform connecting internal teams and data across processes — built on the same Laravel / Vue / MySQL foundation as the rest of the stack.</p>
+            <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Vue.js</span><span class="tag">MySQL</span></div>
+          </div>
+        </div>
+        <div class="stack-right">
+          <span class="stack-badge" style="background:rgba(224,142,43,.14); color:#a5691a;">OPERATIONS</span>
+          <span class="stack-link">Internal workflow tooling <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="more-systems reveal">Also shipped: <span>Hospital Management System · Tourism ERP (portal.pakistantire.com) · DevPro · Meer Enterprises ERP · FVSQN</span></div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience">
+  <div class="eyebrow reveal">Experience</div>
+  <h2 class="section-title reveal">Where the work happened.</h2>
+  <p class="section-sub reveal">Two roles, one throughline: shipping full-stack systems that real teams depend on.</p>
+
+  <div class="timeline reveal-stagger">
+    <div class="tl-entry current">
+      <div class="tl-dot"></div>
+      <div class="tl-card glass">
+        <div class="tl-head"><h3>Software Development Executive</h3><span class="tl-date">JUN 2024 — PRESENT</span></div>
+        <div class="tl-company">FVN Tech · Remote</div>
+        <ul class="tl-list">
+          <li>Architected and shipped 10+ enterprise web applications (ERP, eCommerce, LMS, VMS) currently serving live production users across Canada and Pakistan.</li>
+          <li>Engineered a role-based access control system supporting 5+ user roles with granular permissions across multi-tenant applications.</li>
+          <li>Built real-time dashboards, notifications and visitor check-in using Laravel Events, WebSockets and Vue.js reactive components.</li>
+          <li>Designed and optimized MySQL schemas for high-volume ERP modules, achieving sub-200ms query performance.</li>
+          <li>Reduced development cycle time by ~30% by integrating AI pair-programming tools into daily workflows.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-entry">
+      <div class="tl-dot"></div>
+      <div class="tl-card glass">
+        <div class="tl-head"><h3>Web Developer</h3><span class="tl-date">JUN 2023 — APR 2024</span></div>
+        <div class="tl-company">Technosofts · Sialkot, Pakistan</div>
+        <ul class="tl-list">
+          <li>Developed and maintained 3+ Laravel-based client applications, improving load performance via eager loading and N+1 query fixes.</li>
+          <li>Integrated 5+ third-party REST APIs (payment gateways, shipping, notifications), cutting manual data entry by an estimated 40%.</li>
+          <li>Built 3 internal C# / .NET desktop applications to support client operational workflows.</li>
+          <li>Introduced Postman-based API documentation, reducing onboarding time for new engineers.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES — continuous orbit ============ -->
+<section id="services">
+  <div class="eyebrow reveal">Services</div>
+  <h2 class="section-title reveal">How I can help.</h2>
+  <p class="section-sub reveal">Six things I do on repeat — hover any node to see what it means for your project.</p>
+
+  <div class="services-wrap reveal">
+    <div class="orbit-stage" id="orbit-stage">
+      <div class="orbit-track"></div>
+      <div class="orbit-track t2"></div>
+      <div class="orbit-hub"><b>Services</b><span>hover a node</span></div>
+
+      <div class="service-ring">
+        <div class="service-orbit-item" style="transform:rotate(0deg) translateX(190px);">
+          <div class="soi-inner glass active" data-idx="0" style="transform:translate(-50%,-50%) rotate(0deg);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+          </div>
+        </div>
+        <div class="service-orbit-item" style="transform:rotate(60deg) translateX(190px);">
+          <div class="soi-inner glass" data-idx="1" style="transform:translate(-50%,-50%) rotate(-60deg);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          </div>
+        </div>
+        <div class="service-orbit-item" style="transform:rotate(120deg) translateX(190px);">
+          <div class="soi-inner glass" data-idx="2" style="transform:translate(-50%,-50%) rotate(-120deg);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 5v2M12 17v2M5 12h2M17 12h2M7 7l1.5 1.5M15.5 15.5L17 17M17 7l-1.5 1.5M8.5 15.5L7 17"/></svg>
+          </div>
+        </div>
+        <div class="service-orbit-item" style="transform:rotate(180deg) translateX(190px);">
+          <div class="soi-inner glass" data-idx="3" style="transform:translate(-50%,-50%) rotate(-180deg);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+        </div>
+        <div class="service-orbit-item" style="transform:rotate(240deg) translateX(190px);">
+          <div class="soi-inner glass" data-idx="4" style="transform:translate(-50%,-50%) rotate(-240deg);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg>
+          </div>
+        </div>
+        <div class="service-orbit-item" style="transform:rotate(300deg) translateX(190px);">
+          <div class="soi-inner glass" data-idx="5" style="transform:translate(-50%,-50%) rotate(-300deg);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-detail">
+      <div class="sd-idx" id="sd-idx">01 / 06</div>
+      <h3 id="sd-title">Custom Laravel Development</h3>
+      <p id="sd-desc">Backend architecture, APIs and business logic built for maintainability, not just launch day.</p>
+      <div class="service-pips" id="service-pips">
+        <span class="service-pip active" data-idx="0">Laravel Dev</span>
+        <span class="service-pip" data-idx="1">Vue Frontends</span>
+        <span class="service-pip" data-idx="2">SaaS Architecture</span>
+        <span class="service-pip" data-idx="3">Real-Time Features</span>
+        <span class="service-pip" data-idx="4">MySQL Optimization</span>
+        <span class="service-pip" data-idx="5">Maintenance</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="contact-wrap glass reveal">
+    <div class="eyebrow" style="justify-content:center; display:inline-flex">Contact</div>
+    <h2>Have a system that needs building — or fixing?</h2>
+    <p class="lead">Open to remote and onsite roles, freelance projects, and everything in between. Usually replies within a day.</p>
+    <div class="contact-actions">
+      <a href="mailto:chlaiqa@gmail.com" class="btn btn-primary">chlaiqa@gmail.com</a>
+      <a href="https://wa.me/923448573663" target="_blank" rel="noopener" class="btn btn-whatsapp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.51 2 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.53 3.69-8.22 8.27-8.22 2.21 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.42 5.83c0 4.53-3.7 8.2-8.27 8.2z"/></svg>
+        WhatsApp
+      </a>
+      <a href="tel:+923448573663" class="btn btn-ghost">+92 344 8573663</a>
+    </div>
+    <div class="contact-info">
+      <span>Gujrat, Pakistan</span>
+      <a href="#">LinkedIn ↗</a>
+      <a href="#">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>© <span id="year"></span> Laiqa Mazhar — Full-Stack Engineer, Laravel &amp; Vue.js</footer>
+
+<!-- floating WhatsApp button -->
+<a id="wa-fab" href="https://wa.me/923448573663" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <span class="wa-ping"></span>
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.51 2 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.53 3.69-8.22 8.27-8.22 2.21 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.42 5.83c0 4.53-3.7 8.2-8.27 8.2z"/></svg>
+</a>
+
+<script>
+/* ============================================================
+   NAV: scroll shadow, mobile toggle, active-link tracking
+   ============================================================ */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.style.boxShadow = window.scrollY > 30 ? '0 12px 34px rgba(28,32,80,0.14)' : 'var(--glass-shadow)';
+}, {passive:true});
+
+document.getElementById('nav-toggle').addEventListener('click', () => {
+  const links = document.getElementById('nav-links');
+  const open = links.style.display === 'flex';
+  links.style.display = open ? 'none' : 'flex';
+  if(!open){
+    links.style.cssText = 'display:flex; position:fixed; top:78px; left:50%; transform:translateX(-50%); width:88vw; flex-direction:column; gap:4px; background:rgba(255,255,255,0.92); backdrop-filter:blur(20px); border-radius:20px; padding:14px; box-shadow:0 20px 50px rgba(28,32,80,.18);';
+  }
+});
+document.querySelectorAll('#nav-links a').forEach(a=>{
+  a.addEventListener('click', ()=>{ if(window.innerWidth<=980) document.getElementById('nav-links').style.display='none'; });
+});
+
+const sections = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('#nav-links a');
+const navObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      navAnchors.forEach(a=>a.classList.remove('active'));
+      const match = document.querySelector('#nav-links a[href="#'+entry.target.id+'"]');
+      if(match) match.classList.add('active');
+    }
+  });
+}, {rootMargin:'-45% 0px -45% 0px'});
+sections.forEach(s=>navObserver.observe(s));
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold:.15});
+document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>revealObserver.observe(el));
+
+/* ============================================================
+   CURSOR GLOW (desktop only)
+   ============================================================ */
+const glow = document.getElementById('cursor-glow');
+let gx=window.innerWidth/2, gy=window.innerHeight/2, tx=gx, ty=gy;
+window.addEventListener('mousemove', e=>{ tx=e.clientX; ty=e.clientY; });
+function glowLoop(){
+  gx += (tx-gx)*0.08; gy += (ty-gy)*0.08;
+  glow.style.transform = `translate(${gx}px, ${gy}px) translate(-50%,-50%)`;
+  requestAnimationFrame(glowLoop);
+}
+if(window.matchMedia('(pointer:fine)').matches) glowLoop();
+
+/* ============================================================
+   STACK CARDS — dim/scale receding cards as next one covers it
+   ============================================================ */
+const stackItems = Array.from(document.querySelectorAll('.stack-item'));
+function updateStack(){
+  for(let i=0;i<stackItems.length-1;i++){
+    const current = stackItems[i].querySelector('.stack-card');
+    const next = stackItems[i+1];
+    const nextRect = next.getBoundingClientRect();
+    const currentRect = stackItems[i].getBoundingClientRect();
+    // progress: how much the next item has climbed up toward this one's sticky top
+    const stuckTop = currentRect.top;
+    const dist = nextRect.top - stuckTop;
+    const progress = Math.min(Math.max(1 - dist/300, 0), 1);
+    current.style.transform = `scale(${1 - progress*0.045}) translateY(${progress*-10}px)`;
+    current.style.filter = `brightness(${1 - progress*0.12})`;
+  }
+}
+window.addEventListener('scroll', ()=>requestAnimationFrame(updateStack), {passive:true});
+window.addEventListener('resize', updateStack);
+updateStack();
+
+/* ============================================================
+   SERVICES ORBIT — hover/click to update detail panel
+   ============================================================ */
+const serviceData = [
+  {title:'Custom Laravel Development', desc:'Backend architecture, APIs and business logic built for maintainability, not just launch day.'},
+  {title:'Vue.js 3 Frontends', desc:'Reactive, component-driven interfaces that stay fast as the data grows.'},
+  {title:'SaaS &amp; Multi-Tenant Architecture', desc:'Role-based access, tenant isolation and dashboards that scale past client #1.'},
+  {title:'Real-Time Features', desc:'Live notifications, dashboards and chat via Laravel Events, WebSockets and Vue.'},
+  {title:'MySQL Schema &amp; Optimization', desc:'Indexing, query analysis and schema design for sub-200ms performance at volume.'},
+  {title:'Maintenance &amp; Support', desc:'Ongoing feature work, bug fixes and third-party API integrations for existing systems.'}
+];
+const sdTitle = document.getElementById('sd-title');
+const sdDesc = document.getElementById('sd-desc');
+const sdIdx = document.getElementById('sd-idx');
+function setActiveService(i){
+  sdTitle.innerHTML = serviceData[i].title;
+  sdDesc.innerHTML = serviceData[i].desc;
+  sdIdx.textContent = String(i+1).padStart(2,'0') + ' / 06';
+  document.querySelectorAll('.soi-inner').forEach(el=>el.classList.toggle('active', el.dataset.idx==i));
+  document.querySelectorAll('.service-pip').forEach(el=>el.classList.toggle('active', el.dataset.idx==i));
+}
+document.querySelectorAll('.soi-inner').forEach(el=>{
+  el.addEventListener('mouseenter', ()=>setActiveService(el.dataset.idx));
+  el.addEventListener('click', ()=>setActiveService(el.dataset.idx));
+});
+document.querySelectorAll('.service-pip').forEach(el=>{
+  el.addEventListener('click', ()=>setActiveService(el.dataset.idx));
+  el.addEventListener('mouseenter', ()=>setActiveService(el.dataset.idx));
+});
+
+/* ============================================================
+   3D TILT — kept for any card carrying data-tilt
+   ============================================================ */
+document.querySelectorAll('[data-tilt]').forEach(card=>{
+  card.addEventListener('mousemove', (e)=>{
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left)/r.width;
+    const py = (e.clientY - r.top)/r.height;
+    const rx = (py-0.5) * -10;
+    const ry = (px-0.5) * 12;
+    card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', ()=>{
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+  });
+});
+
+/* ============================================================
+   THREE.JS HERO SCENE — connected node constellation, centered
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const wrap = canvas.parentElement;
+  if(!window.THREE){ return; }
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(46, 1, 0.1, 100);
+  camera.position.set(0, 0, 7.2);
+
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  function makeGlowTexture(hex){
+    const size = 128;
+    const c = document.createElement('canvas'); c.width = c.height = size;
+    const ctx = c.getContext('2d');
+    const g = ctx.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
+    g.addColorStop(0, hex + 'ff');
+    g.addColorStop(0.4, hex + 'aa');
+    g.addColorStop(1, hex + '00');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,size,size);
+    return new THREE.CanvasTexture(c);
+  }
+  const glowIndigo = makeGlowTexture('#4f46e5');
+  const glowCyan = makeGlowTexture('#12c2dd');
+
+  // scatter nodes on a sphere volume
+  const NODE_COUNT = 22;
+  const nodes = [];
+  for(let i=0;i<NODE_COUNT;i++){
+    const phi = Math.acos(-1 + (2*i)/NODE_COUNT);
+    const theta = Math.sqrt(NODE_COUNT*Math.PI)*phi;
+    const r = 2.1 + (i%3===0 ? 0.3 : 0);
+    const v = new THREE.Vector3(
+      r*Math.cos(theta)*Math.sin(phi),
+      r*Math.sin(theta)*Math.sin(phi),
+      r*Math.cos(phi)
+    );
+    nodes.push(v);
+  }
+
+  // connect each node to its 2 nearest neighbours
+  const lineGeo = new THREE.BufferGeometry();
+  const linePositions = [];
+  nodes.forEach((n, i)=>{
+    const dists = nodes.map((m,j)=>({j, d:i===j?Infinity:n.distanceTo(m)})).sort((a,b)=>a.d-b.d);
+    for(let k=0;k<2;k++){
+      const m = nodes[dists[k].j];
+      linePositions.push(n.x,n.y,n.z, m.x,m.y,m.z);
+    }
+  });
+  lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+  const lineMat = new THREE.LineBasicMaterial({color:0x4f46e5, transparent:true, opacity:0.28});
+  const lines = new THREE.LineSegments(lineGeo, lineMat);
+  group.add(lines);
+
+  // node points (glowing)
+  const nodeGeo = new THREE.BufferGeometry();
+  const nodePositions = new Float32Array(nodes.length*3);
+  nodes.forEach((n,i)=>{ nodePositions[i*3]=n.x; nodePositions[i*3+1]=n.y; nodePositions[i*3+2]=n.z; });
+  nodeGeo.setAttribute('position', new THREE.BufferAttribute(nodePositions,3));
+  const nodeMat = new THREE.PointsMaterial({size:0.24, map:glowCyan, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, color:0x12c2dd});
+  const nodePoints = new THREE.Points(nodeGeo, nodeMat);
+  group.add(nodePoints);
+
+  // central glowing hub sprite
+  const hubMat = new THREE.SpriteMaterial({map:glowIndigo, color:0x4f46e5, transparent:true, blending:THREE.AdditiveBlending, depthWrite:false});
+  const hub = new THREE.Sprite(hubMat);
+  hub.scale.set(1.1,1.1,1);
+  group.add(hub);
+
+  function resize(){
+    const w = wrap.clientWidth, h = wrap.clientHeight;
+    if(!w || !h) return;
+    camera.aspect = w/h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w,h);
+  }
+  window.addEventListener('resize', resize);
+  const ro = new ResizeObserver(resize);
+  ro.observe(wrap);
+  resize();
+
+  let mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', (e)=>{
+    mouseX = (e.clientX / window.innerWidth - 0.5);
+    mouseY = (e.clientY / window.innerHeight - 0.5);
+  });
+
+  const clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    group.rotation.y = t*0.18;
+    group.rotation.x = Math.sin(t*0.3)*0.15;
+    group.rotation.y += mouseX*0.3;
+    group.rotation.x += mouseY*0.15;
+    nodeMat.opacity = 0.8 + Math.sin(t*1.6)*0.15;
+    hubMat.opacity = 0.75 + Math.sin(t*1.2)*0.2;
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
