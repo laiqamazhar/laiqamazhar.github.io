@@ -199,7 +199,7 @@
     background:linear-gradient(100deg,var(--indigo) 10%,var(--cyan-bright) 60%,var(--amber) 100%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-  .hero-left p.lead{font-size:16px; color:var(--ink-soft); max-width:340px; margin-bottom:28px;}
+  .hero-left p.lead{font-size:15.5px; color:var(--ink-soft); max-width:400px; margin-bottom:28px;}
   .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
   .hero-right{display:flex; flex-direction:column; align-items:flex-end;}
 
@@ -238,7 +238,7 @@
   .ac-stat span{font-size:11.5px; color:var(--ink-faint); line-height:1.3; display:block;}
 
   /* center orb */
-  .hero-center{position:relative; width:min(46vw,400px); height:min(46vw,400px); display:flex; align-items:center; justify-content:center;}
+  .hero-center{position:relative; width:min(46vw,400px); height:min(46vw,400px); display:flex; align-items:center; justify-content:center; --orbit-r:210px;}
   .hero-orb-frame{
     position:relative; width:78%; height:78%; border-radius:50%;
     background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.65), rgba(255,255,255,.15) 60%);
@@ -464,7 +464,7 @@
   #services{padding-top:calc(var(--sec-pad) * 0.7);}
   .services-wrap{display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center;}
   .orbit-stage{
-    position:relative; width:min(46vw,480px); height:min(46vw,480px); margin:0 auto;
+    position:relative; width:min(46vw,480px); height:min(46vw,480px); margin:0 auto; --svc-r:190px;
   }
   .orbit-hub{
     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
@@ -568,7 +568,7 @@
      ============================================================ */
   @media (max-width:980px){
     .hero-grid{grid-template-columns:1fr; text-align:center; justify-items:center;}
-    .hero-center{order:-1; width:280px; height:280px; margin-bottom:10px;}
+    .hero-center{order:-1; width:280px; height:280px; margin-bottom:10px; --orbit-r:140px;}
     .hero-left p.lead{margin-left:auto; margin-right:auto;}
     .hero-actions{justify-content:center;}
     .hero-right{align-items:center;}
@@ -576,7 +576,7 @@
     .about-wrap{grid-template-columns:1fr;}
     .skills-grid{grid-template-columns:repeat(2,1fr);}
     .services-wrap{grid-template-columns:1fr;}
-    .orbit-stage{width:320px; height:320px;}
+    .orbit-stage{width:320px; height:320px; --svc-r:130px;}
     .stack-card{grid-template-columns:1fr; text-align:left;}
     .stack-num{display:none;}
     .stack-right{align-items:flex-start;}
@@ -591,12 +591,18 @@
     .skills-grid{grid-template-columns:1fr;}
     .about-stat-grid{grid-template-columns:1fr;}
     .nav-cta .btn-ghost{display:none;}
+    .nav-wa{display:none;}
+    .nav-cta .btn-primary{padding:9px 16px; font-size:12.5px;}
     #cursor-glow{display:none;}
-    .orbit-stage{width:260px; height:260px;}
+    .hero-center{width:220px; height:220px; --orbit-r:100px;}
+    .orbit-badge .badge-inner{padding:5px 9px; font-size:9px; gap:4px;}
+    .orbit-stage{width:260px; height:260px; --svc-r:100px;}
     .orbit-hub{width:100px; height:100px;}
     .service-orbit-item .soi-inner{width:58px; height:58px;}
     .service-orbit-item .soi-inner svg{width:18px; height:18px;}
     .stack-item{top:80px;}
+    #wa-fab{width:50px; height:50px; right:16px; bottom:16px;}
+    #wa-fab svg{width:23px; height:23px;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -638,8 +644,8 @@
 
       <div class="hero-side hero-left">
         <div class="eyebrow">Full-Stack Engineer</div>
-        <h1>Backend logic, <span class="grad">frontend polish</span>.</h1>
-        <p class="lead">3+ years engineering ERP, SaaS and real-time platforms for teams across Canada and Pakistan — owned end to end.</p>
+        <h1>Your business runs on <span class="grad">manual work.</span> I replace it with systems.</h1>
+        <p class="lead">Spreadsheets, sticky notes, DMs at midnight — that's not a process, that's a business waiting to break. I build the Laravel &amp; Vue software that takes its place, and I've done it 10+ times for teams across Canada and Pakistan.</p>
         <div class="hero-actions">
           <a href="#projects" class="btn btn-primary">
             View my work
@@ -652,16 +658,16 @@
       <div class="hero-center">
         <div class="hero-orb-frame"><canvas id="hero-canvas"></canvas></div>
         <div class="hero-orbit-ring">
-          <div class="orbit-badge" style="transform:rotate(0deg) translateX(210px);">
+          <div class="orbit-badge" style="transform:rotate(0deg) translateX(var(--orbit-r));">
             <div class="badge-inner glass"><span class="dotc" style="background:var(--indigo)"></span>Laravel</div>
           </div>
-          <div class="orbit-badge" style="transform:rotate(90deg) translateX(210px);">
+          <div class="orbit-badge" style="transform:rotate(90deg) translateX(var(--orbit-r));">
             <div class="badge-inner glass"><span class="dotc" style="background:var(--cyan)"></span>Vue.js</div>
           </div>
-          <div class="orbit-badge" style="transform:rotate(180deg) translateX(210px);">
+          <div class="orbit-badge" style="transform:rotate(180deg) translateX(var(--orbit-r));">
             <div class="badge-inner glass"><span class="dotc" style="background:var(--amber)"></span>MySQL</div>
           </div>
-          <div class="orbit-badge" style="transform:rotate(270deg) translateX(210px);">
+          <div class="orbit-badge" style="transform:rotate(270deg) translateX(var(--orbit-r));">
             <div class="badge-inner glass"><span class="dotc" style="background:var(--indigo-soft)"></span>API</div>
           </div>
         </div>
@@ -978,32 +984,32 @@
       <div class="orbit-hub"><b>Services</b><span>hover a node</span></div>
 
       <div class="service-ring">
-        <div class="service-orbit-item" style="transform:rotate(0deg) translateX(190px);">
+        <div class="service-orbit-item" style="transform:rotate(0deg) translateX(var(--svc-r));">
           <div class="soi-inner glass active" data-idx="0" style="transform:translate(-50%,-50%) rotate(0deg);">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
           </div>
         </div>
-        <div class="service-orbit-item" style="transform:rotate(60deg) translateX(190px);">
+        <div class="service-orbit-item" style="transform:rotate(60deg) translateX(var(--svc-r));">
           <div class="soi-inner glass" data-idx="1" style="transform:translate(-50%,-50%) rotate(-60deg);">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
           </div>
         </div>
-        <div class="service-orbit-item" style="transform:rotate(120deg) translateX(190px);">
+        <div class="service-orbit-item" style="transform:rotate(120deg) translateX(var(--svc-r));">
           <div class="soi-inner glass" data-idx="2" style="transform:translate(-50%,-50%) rotate(-120deg);">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 5v2M12 17v2M5 12h2M17 12h2M7 7l1.5 1.5M15.5 15.5L17 17M17 7l-1.5 1.5M8.5 15.5L7 17"/></svg>
           </div>
         </div>
-        <div class="service-orbit-item" style="transform:rotate(180deg) translateX(190px);">
+        <div class="service-orbit-item" style="transform:rotate(180deg) translateX(var(--svc-r));">
           <div class="soi-inner glass" data-idx="3" style="transform:translate(-50%,-50%) rotate(-180deg);">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           </div>
         </div>
-        <div class="service-orbit-item" style="transform:rotate(240deg) translateX(190px);">
+        <div class="service-orbit-item" style="transform:rotate(240deg) translateX(var(--svc-r));">
           <div class="soi-inner glass" data-idx="4" style="transform:translate(-50%,-50%) rotate(-240deg);">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg>
           </div>
         </div>
-        <div class="service-orbit-item" style="transform:rotate(300deg) translateX(190px);">
+        <div class="service-orbit-item" style="transform:rotate(300deg) translateX(var(--svc-r));">
           <div class="soi-inner glass" data-idx="5" style="transform:translate(-50%,-50%) rotate(-300deg);">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-6"/></svg>
           </div>
