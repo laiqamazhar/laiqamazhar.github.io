@@ -36,9 +36,9 @@
     --glass-border:rgba(255,255,255,0.9);
     --glass-shadow:0 20px 60px rgba(28,32,80,0.10);
 
-    --radius-lg:26px;
-    --radius-md:18px;
-    --radius-sm:10px;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:8px;
 
     --font-display:'Roboto', sans-serif;
     --font-body:'Roboto', sans-serif;
@@ -205,7 +205,7 @@
 
   /* "Why Automate" persuasion card */
   .automate-card{
-    border-radius:24px;
+    border-radius:18px;
     padding:26px 26px 22px;
     text-align:left;
     max-width:340px;
@@ -279,7 +279,7 @@
   .about-wrap{display:grid; grid-template-columns:.8fr 1.2fr; gap:50px; align-items:center;}
   .about-visual{position:relative;}
   .about-visual-card{
-    border-radius:32px; padding:34px 30px; position:relative; overflow:hidden;
+    border-radius:22px; padding:34px 30px; position:relative; overflow:hidden;
   }
   .about-visual-card::before{
     content:''; position:absolute; inset:0;
@@ -368,36 +368,67 @@
      PAST WORK — overlapped stack that swipes up on scroll
      ============================================================ */
   #projects{padding-bottom:calc(var(--sec-pad) * 0.4);}
-  .stack-container{position:relative; margin-top:10px;}
-  .stack-item{position:sticky; top:96px; padding-bottom:26px;}
+  .stack-shell{position:relative; display:grid; grid-template-columns:1fr 48px; gap:14px; align-items:start;}
+  .stack-container{position:relative; margin-top:10px; perspective:1400px;}
+  .stack-item{position:sticky; top:100px; padding-bottom:22px;}
   .stack-card{
-    border-radius:30px;
-    padding:clamp(28px,4vw,52px);
-    display:grid; grid-template-columns:auto 1fr auto; gap:30px; align-items:center;
-    min-height:260px;
-    transition:transform .25s var(--ease), filter .25s var(--ease);
+    position:relative;
+    border-radius:18px;
+    padding:clamp(26px,3.6vw,44px);
+    display:grid; grid-template-columns:auto 1fr auto; gap:28px; align-items:center;
+    min-height:250px;
+    border:1.5px solid var(--accent, rgba(79,70,229,.3));
+    box-shadow:0 22px 44px var(--accent-glow, rgba(79,70,229,.22)), 0 2px 0 rgba(255,255,255,.6) inset;
+    transition:transform .5s var(--ease), filter .5s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
     will-change:transform;
+    transform-style:preserve-3d;
   }
+  .stack-card::before{
+    content:'';
+    position:absolute; top:-1.5px; left:22px; right:22px; height:4px;
+    border-radius:0 0 8px 8px;
+    background:var(--accent, var(--indigo));
+  }
+  .stack-card:hover{box-shadow:0 30px 60px var(--accent-glow, rgba(79,70,229,.3)), 0 2px 0 rgba(255,255,255,.6) inset;}
   .stack-num{
-    font-family:var(--font-display); font-weight:900; font-size:15px;
-    color:var(--ink-faint); writing-mode:vertical-rl; text-orientation:mixed;
+    font-family:var(--font-display); font-weight:900; font-size:14px;
+    color:var(--accent, var(--ink-faint)); writing-mode:vertical-rl; text-orientation:mixed;
+    opacity:.75;
   }
   .stack-glyph{
-    width:64px; height:64px; border-radius:18px; flex:none;
+    width:60px; height:60px; border-radius:16px; flex:none;
     display:flex; align-items:center; justify-content:center;
-    color:#fff; font-family:var(--font-display); font-weight:900; font-size:18px;
-    box-shadow:0 16px 30px rgba(18,194,221,.28);
+    color:#fff; font-family:var(--font-display); font-weight:900; font-size:17px;
+    box-shadow:0 14px 26px var(--accent-glow, rgba(18,194,221,.28));
   }
-  .stack-body h3{font-size:clamp(20px,2.3vw,28px); margin-bottom:10px;}
-  .stack-body p{font-size:14.5px; color:var(--ink-soft); max-width:640px; margin-bottom:16px;}
+  .stack-body h3{font-size:clamp(19px,2.2vw,27px); margin-bottom:9px;}
+  .stack-body p{font-size:14px; color:var(--ink-soft); max-width:640px; margin-bottom:15px;}
   .stack-right{display:flex; flex-direction:column; align-items:flex-end; gap:14px;}
   .stack-badge{
     font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em;
-    padding:5px 11px; border-radius:100px; white-space:nowrap;
+    padding:5px 11px; border-radius:8px; white-space:nowrap;
+    background:var(--accent-soft, rgba(79,70,229,.12)); color:var(--accent, var(--indigo));
   }
-  .stack-link{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; color:var(--indigo);}
+  .stack-link{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; color:var(--accent, var(--indigo));}
   .stack-link svg{width:13px; height:13px;}
   .more-systems{margin-top:14px; text-align:center; font-family:var(--font-mono); font-size:12px; color:var(--ink-faint);}
+
+  /* progress rail beside the stack */
+  .stack-rail{
+    position:sticky; top:150px;
+    display:flex; flex-direction:column; align-items:center; gap:16px;
+    padding:10px 0;
+  }
+  .rail-line{position:absolute; top:20px; bottom:20px; left:50%; width:2px; transform:translateX(-50%); background:rgba(13,18,48,.08); border-radius:2px;}
+  .rail-fill{position:absolute; top:0; left:0; width:100%; height:0%; background:linear-gradient(var(--indigo),var(--cyan-bright)); border-radius:2px; transition:height .4s var(--ease);}
+  .rail-dot{
+    width:30px; height:30px; border-radius:50%; border:1.5px solid rgba(13,18,48,.12);
+    background:var(--glass-strong); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:all .35s var(--ease); flex:none;
+  }
+  .rail-dot span{font-family:var(--font-mono); font-size:9px; color:var(--ink-faint); transition:color .3s;}
+  .rail-dot.active{background:linear-gradient(135deg,var(--indigo),var(--cyan-bright)); border-color:transparent; transform:scale(1.2); box-shadow:0 8px 18px rgba(79,70,229,.35);}
+  .rail-dot.active span{color:#fff;}
   .more-systems span{color:var(--ink-soft);}
 
   /* ============================================================
@@ -482,7 +513,7 @@
      CONTACT
      ============================================================ */
   #contact .contact-wrap{
-    border-radius:32px;
+    border-radius:22px;
     padding:min(6vw,58px);
     position:relative;
     overflow:hidden;
@@ -549,6 +580,8 @@
     .stack-card{grid-template-columns:1fr; text-align:left;}
     .stack-num{display:none;}
     .stack-right{align-items:flex-start;}
+    .stack-shell{grid-template-columns:1fr;}
+    .stack-rail{display:none;}
     .nav-links{display:none;}
     #nav-toggle{display:flex;}
   }
@@ -768,116 +801,128 @@
   <h2 class="section-title reveal">Production systems, not demos.</h2>
   <p class="section-sub reveal">Scroll — each build stacks over the last, the way real projects piled up over three years.</p>
 
-  <div class="stack-container">
+  <div class="stack-shell">
+    <div class="stack-container" id="stack-container">
 
-    <div class="stack-item" style="z-index:1;">
-      <div class="stack-card glass">
-        <span class="stack-num">01 · QEXCEL</span>
-        <div style="display:flex; gap:24px; align-items:center;">
-          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--indigo),var(--indigo-soft));">QX</div>
-          <div class="stack-body">
-            <h3>QExcel Pro</h3>
-            <p>Multi-module admin platform for business operations and food-safety compliance, built for a Canadian enterprise client. KPI dashboards process 10,000+ records with sub-300ms response times.</p>
-            <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Vue.js</span><span class="tag">MySQL</span><span class="tag">Bootstrap</span></div>
+      <div class="stack-item" style="z-index:1;">
+        <div class="stack-card glass" style="--accent:#4f46e5; --accent-soft:rgba(79,70,229,.12); --accent-glow:rgba(79,70,229,.28);">
+          <span class="stack-num">01 · QEXCEL</span>
+          <div style="display:flex; gap:24px; align-items:center;">
+            <div class="stack-glyph" style="background:linear-gradient(135deg,#4f46e5,#7c6ff0);">QX</div>
+            <div class="stack-body">
+              <h3>QExcel Pro</h3>
+              <p>Multi-module admin platform for business operations and food-safety compliance, built for a Canadian enterprise client. KPI dashboards process 10,000+ records with sub-300ms response times.</p>
+              <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Vue.js</span><span class="tag">MySQL</span><span class="tag">Bootstrap</span></div>
+            </div>
+          </div>
+          <div class="stack-right">
+            <span class="stack-badge">LIVE · PRODUCTION</span>
+            <span class="stack-link">Compliance &amp; reporting <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
           </div>
         </div>
-        <div class="stack-right">
-          <span class="stack-badge" style="background:rgba(79,70,229,.12); color:var(--indigo);">LIVE · PRODUCTION</span>
-          <span class="stack-link">Compliance &amp; reporting <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
-        </div>
       </div>
-    </div>
 
-    <div class="stack-item" style="z-index:2;">
-      <div class="stack-card glass">
-        <span class="stack-num">02 · VISPRO</span>
-        <div style="display:flex; gap:24px; align-items:center;">
-          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--cyan),var(--cyan-bright));">VP</div>
-          <div class="stack-body">
-            <h3>VisPro LMS</h3>
-            <p>Corporate learning management system with course creation, enrollment, assessments and progress tracking across differentiated dashboards for Admins, Instructors and Learners.</p>
-            <div class="tag-row"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">AJAX</span></div>
+      <div class="stack-item" style="z-index:2;">
+        <div class="stack-card glass" style="--accent:#0891a8; --accent-soft:rgba(8,145,168,.12); --accent-glow:rgba(8,145,168,.28);">
+          <span class="stack-num">02 · VISPRO</span>
+          <div style="display:flex; gap:24px; align-items:center;">
+            <div class="stack-glyph" style="background:linear-gradient(135deg,#0891a8,#12c2dd);">VP</div>
+            <div class="stack-body">
+              <h3>VisPro LMS</h3>
+              <p>Corporate learning management system with course creation, enrollment, assessments and progress tracking across differentiated dashboards for Admins, Instructors and Learners.</p>
+              <div class="tag-row"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">AJAX</span></div>
+            </div>
+          </div>
+          <div class="stack-right">
+            <span class="stack-badge">LMS PLATFORM</span>
+            <span class="stack-link">Role-based dashboards <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
           </div>
         </div>
-        <div class="stack-right">
-          <span class="stack-badge" style="background:rgba(8,145,168,.12); color:var(--cyan);">LMS PLATFORM</span>
-          <span class="stack-link">Role-based dashboards <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
-        </div>
       </div>
-    </div>
 
-    <div class="stack-item" style="z-index:3;">
-      <div class="stack-card glass">
-        <span class="stack-num">03 · VMS</span>
-        <div style="display:flex; gap:24px; align-items:center;">
-          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--amber),#f0b35f);">VM</div>
-          <div class="stack-body">
-            <h3>VMS — Visitor Management</h3>
-            <p>Real-time visitor management SPA that replaced paper front-desk logs with QR-code identity flows and instant host notifications via email/SMS.</p>
-            <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Vue.js</span></div>
+      <div class="stack-item" style="z-index:3;">
+        <div class="stack-card glass" style="--accent:#e08e2b; --accent-soft:rgba(224,142,43,.14); --accent-glow:rgba(224,142,43,.3);">
+          <span class="stack-num">03 · VMS</span>
+          <div style="display:flex; gap:24px; align-items:center;">
+            <div class="stack-glyph" style="background:linear-gradient(135deg,#e08e2b,#f0b35f);">VM</div>
+            <div class="stack-body">
+              <h3>VMS — Visitor Management</h3>
+              <p>Real-time visitor management SPA that replaced paper front-desk logs with QR-code identity flows and instant host notifications via email/SMS.</p>
+              <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Vue.js</span></div>
+            </div>
+          </div>
+          <div class="stack-right">
+            <span class="stack-badge">REAL-TIME SPA</span>
+            <span class="stack-link">QR check-in flow <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
           </div>
         </div>
-        <div class="stack-right">
-          <span class="stack-badge" style="background:rgba(224,142,43,.14); color:#a5691a;">REAL-TIME SPA</span>
-          <span class="stack-link">QR check-in flow <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
-        </div>
       </div>
-    </div>
 
-    <div class="stack-item" style="z-index:4;">
-      <div class="stack-card glass">
-        <span class="stack-num">04 · FVOPEX</span>
-        <div style="display:flex; gap:24px; align-items:center;">
-          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--indigo-soft),var(--indigo));">FX</div>
-          <div class="stack-body">
-            <h3>FVOPEX</h3>
-            <p>Multi-tenant supplier network platform (Maintainex) — navigation, data tables, supplier profiles and live chat panels for operational teams.</p>
-            <div class="tag-row"><span class="tag">Vue.js 3</span><span class="tag">Laravel</span></div>
+      <div class="stack-item" style="z-index:4;">
+        <div class="stack-card glass" style="--accent:#8b5cf6; --accent-soft:rgba(139,92,246,.13); --accent-glow:rgba(139,92,246,.3);">
+          <span class="stack-num">04 · FVOPEX</span>
+          <div style="display:flex; gap:24px; align-items:center;">
+            <div class="stack-glyph" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);">FX</div>
+            <div class="stack-body">
+              <h3>FVOPEX</h3>
+              <p>Multi-tenant supplier network platform (Maintainex) — navigation, data tables, supplier profiles and live chat panels for operational teams.</p>
+              <div class="tag-row"><span class="tag">Vue.js 3</span><span class="tag">Laravel</span></div>
+            </div>
+          </div>
+          <div class="stack-right">
+            <span class="stack-badge">MULTI-TENANT SAAS</span>
+            <span class="stack-link">Supplier network <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
           </div>
         </div>
-        <div class="stack-right">
-          <span class="stack-badge" style="background:rgba(79,70,229,.12); color:var(--indigo);">MULTI-TENANT SAAS</span>
-          <span class="stack-link">Supplier network <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
-        </div>
       </div>
-    </div>
 
-    <div class="stack-item" style="z-index:5;">
-      <div class="stack-card glass">
-        <span class="stack-num">05 · FVPRO</span>
-        <div style="display:flex; gap:24px; align-items:center;">
-          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--cyan-bright),var(--cyan));">FL</div>
-          <div class="stack-body">
-            <h3>FVPro Learn</h3>
-            <p>End-to-end online learning platform with course management, assessments and instructor dashboards, built on a reusable Blade component library across 15+ views.</p>
-            <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Bootstrap</span></div>
+      <div class="stack-item" style="z-index:5;">
+        <div class="stack-card glass" style="--accent:#0f9d76; --accent-soft:rgba(15,157,118,.13); --accent-glow:rgba(15,157,118,.3);">
+          <span class="stack-num">05 · FVPRO</span>
+          <div style="display:flex; gap:24px; align-items:center;">
+            <div class="stack-glyph" style="background:linear-gradient(135deg,#0f9d76,#34c99b);">FL</div>
+            <div class="stack-body">
+              <h3>FVPro Learn</h3>
+              <p>End-to-end online learning platform with course management, assessments and instructor dashboards, built on a reusable Blade component library across 15+ views.</p>
+              <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Bootstrap</span></div>
+            </div>
+          </div>
+          <div class="stack-right">
+            <span class="stack-badge">6-WEEK SHIP</span>
+            <span class="stack-link">Reusable component library <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
           </div>
         </div>
-        <div class="stack-right">
-          <span class="stack-badge" style="background:rgba(8,145,168,.12); color:var(--cyan);">6-WEEK SHIP</span>
-          <span class="stack-link">Reusable component library <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
-        </div>
       </div>
-    </div>
 
-    <div class="stack-item" style="z-index:6;">
-      <div class="stack-card glass">
-        <span class="stack-num">06 · SE LINK</span>
-        <div style="display:flex; gap:24px; align-items:center;">
-          <div class="stack-glyph" style="background:linear-gradient(135deg,var(--amber),var(--indigo-soft));">SE</div>
-          <div class="stack-body">
-            <h3>SE Link</h3>
-            <p>Operations workflow platform connecting internal teams and data across processes — built on the same Laravel / Vue / MySQL foundation as the rest of the stack.</p>
-            <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Vue.js</span><span class="tag">MySQL</span></div>
+      <div class="stack-item" style="z-index:6;">
+        <div class="stack-card glass" style="--accent:#e2478a; --accent-soft:rgba(226,71,138,.13); --accent-glow:rgba(226,71,138,.3);">
+          <span class="stack-num">06 · SE LINK</span>
+          <div style="display:flex; gap:24px; align-items:center;">
+            <div class="stack-glyph" style="background:linear-gradient(135deg,#e2478a,#ef7fb0);">SE</div>
+            <div class="stack-body">
+              <h3>SE Link</h3>
+              <p>Operations workflow platform connecting internal teams and data across processes — built on the same Laravel / Vue / MySQL foundation as the rest of the stack.</p>
+              <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Vue.js</span><span class="tag">MySQL</span></div>
+            </div>
+          </div>
+          <div class="stack-right">
+            <span class="stack-badge">OPERATIONS</span>
+            <span class="stack-link">Internal workflow tooling <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
           </div>
         </div>
-        <div class="stack-right">
-          <span class="stack-badge" style="background:rgba(224,142,43,.14); color:#a5691a;">OPERATIONS</span>
-          <span class="stack-link">Internal workflow tooling <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
-        </div>
       </div>
+
     </div>
 
+    <div class="stack-rail" id="stack-rail">
+      <div class="rail-line"><div class="rail-fill" id="rail-fill"></div></div>
+      <button class="rail-dot active" data-target="0"><span>01</span></button>
+      <button class="rail-dot" data-target="1"><span>02</span></button>
+      <button class="rail-dot" data-target="2"><span>03</span></button>
+      <button class="rail-dot" data-target="3"><span>04</span></button>
+      <button class="rail-dot" data-target="4"><span>05</span></button>
+      <button class="rail-dot" data-target="5"><span>06</span></button>
+    </div>
   </div>
 
   <div class="more-systems reveal">Also shipped: <span>Hospital Management System · Tourism ERP (portal.pakistantire.com) · DevPro · Meer Enterprises ERP · FVSQN</span></div>
@@ -1073,26 +1118,56 @@ function glowLoop(){
 if(window.matchMedia('(pointer:fine)').matches) glowLoop();
 
 /* ============================================================
-   STACK CARDS — dim/scale receding cards as next one covers it
+   STACK CARDS — dim/scale receding cards as next one covers it,
+   eased with a lerp loop for a smooth (non-jumpy) feel + progress rail
    ============================================================ */
 const stackItems = Array.from(document.querySelectorAll('.stack-item'));
-function updateStack(){
+const stackEased = stackItems.map(()=>0);
+const railDots = Array.from(document.querySelectorAll('.rail-dot'));
+const railFill = document.getElementById('rail-fill');
+const STACK_TOP = window.innerWidth <= 640 ? 80 : 100;
+
+function easeOutCubic(x){ return 1 - Math.pow(1-x, 3); }
+
+function stackLoop(){
+  let activeIndex = 0;
+
   for(let i=0;i<stackItems.length-1;i++){
     const current = stackItems[i].querySelector('.stack-card');
     const next = stackItems[i+1];
     const nextRect = next.getBoundingClientRect();
     const currentRect = stackItems[i].getBoundingClientRect();
-    // progress: how much the next item has climbed up toward this one's sticky top
-    const stuckTop = currentRect.top;
-    const dist = nextRect.top - stuckTop;
-    const progress = Math.min(Math.max(1 - dist/300, 0), 1);
-    current.style.transform = `scale(${1 - progress*0.045}) translateY(${progress*-10}px)`;
-    current.style.filter = `brightness(${1 - progress*0.12})`;
+    const dist = nextRect.top - currentRect.top;
+    const target = Math.min(Math.max(1 - dist/320, 0), 1);
+
+    // smooth toward target instead of snapping straight to it
+    stackEased[i] += (target - stackEased[i]) * 0.12;
+    const p = easeOutCubic(stackEased[i]);
+
+    current.style.transform = `scale(${1 - p*0.05}) translateY(${p*-14}px) rotateX(${p*3}deg)`;
+    current.style.filter = `brightness(${1 - p*0.14})`;
+
+    if(currentRect.top <= STACK_TOP + 8) activeIndex = i+1 <= stackItems.length-1 ? i+1 : i;
   }
+  // clamp: the active card is the last one that has reached the sticky top
+  activeIndex = 0;
+  stackItems.forEach((item,i)=>{
+    if(item.getBoundingClientRect().top <= STACK_TOP + 8) activeIndex = i;
+  });
+
+  railDots.forEach((dot,i)=>dot.classList.toggle('active', i===activeIndex));
+  if(railFill) railFill.style.height = ((activeIndex)/(stackItems.length-1)*100) + '%';
+
+  requestAnimationFrame(stackLoop);
 }
-window.addEventListener('scroll', ()=>requestAnimationFrame(updateStack), {passive:true});
-window.addEventListener('resize', updateStack);
-updateStack();
+requestAnimationFrame(stackLoop);
+
+railDots.forEach(dot=>{
+  dot.addEventListener('click', ()=>{
+    const idx = parseInt(dot.dataset.target,10);
+    stackItems[idx].scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
 
 /* ============================================================
    SERVICES ORBIT — hover/click to update detail panel
